@@ -6,68 +6,41 @@
 <body>
 <video id="webcam" autoplay="true" width="400" height="300"></video>
 
-<!--<video id="webcam2" autoplay="true" width="400" height="300"></video>-->
-<!--<script src="js/eventemitter.js"></script>-->
 <script src="md.js"></script>
 <script>
     var webcam = document.getElementById('webcam');
-    var webcam2 = document.getElementById('webcam2');
 
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
-    navigator.getUserMedia({video:true}, function (stream) {
+    navigator.getUserMedia({video: true}, function (stream) {
         webcam.src = window.webkitURL.createObjectURL(stream);
-//            webcam2.src = window.webkitURL.createObjectURL(stream);
 
+        var md = new MotionDetector(webcam);
 
-        md = MotionDetector(webcam);
-        /*
-         md.detect({
-         onmove: function(){
+        document.body.appendChild(md.getBlendedCanvas());
 
-         },
-         threshold: 2,
-         dimension : {
-         x: 0,
-         y: 0,
-         w: 50,
-         h: 50
-         }
-         });
-
-         */
-        md.detect(function() {
+        md.detect(function () {
             console.log("top-left")
         }, 5, {
-            x:0,
-            y:0,
-            w:50,
-            h:50
+            x: 0,
+            y: 0,
+            w: 50,
+            h: 50
         });
 
-        md.detect(function() {
+        md.detect(function () {
             console.log("everywhere");
         }, 5);
 
 
-        md.detect(function() {
+        md.detect(function () {
             console.log("bottom-right")
         }, 2, {
-            x:350,
-            y:250,
-            w:50,
-            h:50
+            x: 350,
+            y: 250,
+            w: 50,
+            h: 50
         });
-
-
-        /*
-         md.on('moved', function(average){
-         console.log('average', average);
-         });*/
-
-//            md2 = MotionDetector(webcam2, "billy bob");
-//            md2.detect();
-
 
     });
 
